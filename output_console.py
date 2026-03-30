@@ -12,32 +12,57 @@ class OutputConsole(OutputBase):
         Ansi.reset()
 
     def draw_grid(self) -> None:
-        # YOUR CODE HERE
+
+        top = "┌────┬"+"────┬"*5+"────┐"
+        row = "│    │"+5*"    │"+"    │"
+        mid = "├────┼"+"────┼"*5+"────┤"
+        bottom = "└────┴"+"────┴"*5+"────┘"
+        for r in range(12):
+            if r == 0:
+                Ansi.gotoXY(1,r+self.VERTICAL_OFFSET)
+                print(top)
+                Ansi.gotoXY(1,r+self.VERTICAL_OFFSET+1)
+                print(row)
+            elif r%2 == 0:
+                Ansi.gotoXY(1,r+self.VERTICAL_OFFSET)
+                print (mid)
+                Ansi.gotoXY(1,r+self.VERTICAL_OFFSET+1)
+                print(row)
+        print(bottom)
         Ansi.reset()
-        print(
-"""
-┌
-┐
-└
-┘
-├
-┤
-┼
-─
-│
-┬
-┴
-█ 
+        """
+        ┌
+        ┐
+        └
+        ┘
+        ├
+        ┤
+        ┼
+        ─
+        │
+        ┬
+        ┴
+        █ 
 
-https://de.wikipedia.org/wiki/Unicodeblock_Rahmenzeichnung
-""")
+        https://de.wikipedia.org/wiki/Unicodeblock_Rahmenzeichnung
+        """
 
+    def draw_token(self, x: int = 2, y: int = 2, token: GameToken = GameToken.EMPTY) -> None:
+    # Korrekte Umrechnung der Feldkoordinaten in Konsolen-Koordinaten
+        px = 3 + x * 5
+        py = self.VERTICAL_OFFSET + 1 + y * 2
 
-    def draw_token(self, x: int, y: int, token: GameToken = GameToken.EMPTY) -> None:
-        # YOUR CODE HERE
-        Ansi.gotoXY(1, 20)
-        pass
+        Ansi.gotoXY(px, py)
 
+        if token == GameToken.RED:
+            Ansi.set_foreground(1, True)
+            print("██")
+        elif token == GameToken.YELLOW:
+            Ansi.set_foreground(3, True)
+            print("██")
+        else:
+            print("  ")       # Feld löschen
+        Ansi.reset()
 
 if __name__ == '__main__':
     # use the code below to test your implementation
