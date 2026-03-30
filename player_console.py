@@ -14,15 +14,31 @@ if Util.isRaspberry():
 class PlayerConsole(PlayerBase):
     def __init__(self, player: GameToken):  # Red or Yellow player
         super().__init__(player)
-        # YOUR CODE HERE
-        # self._output = OutputConsole() # use this class for console output
+        # # # YOUR CODE HERE
+        self._output = OutputConsole() # use this class for console output
         self._input = InputConsole() # use this class for console input
 
     def play_turn(self) -> int:
-        # YOUR CODE HERE
-        # TODO: return desired column from user input (0..6) using
-        # use self._input to read keys, use self._output to draw current token position
-        pass
+        # # # YOUR CODE HERE
+        # # # TODO: return desired column from user input (0..6) using
+        # # # use self._input to read keys, use self._output to draw current token position
+        y = -1
+        x = 3      
+
+        while True:
+            self._output.draw_token(x, y, self._player)
+            key = self._input.read_key()
+
+            if key == Keys.RIGHT:
+                if x < 6:
+                    x += 1
+            elif key == Keys.LEFT:
+                if x > 0:
+                    x -= 1
+            elif key == Keys.ENTER:
+                return x
+            else: break
+
 
     def draw_board(self, board: list, state: GameState) -> None:
         # YOUR CODE HERE
