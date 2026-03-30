@@ -41,9 +41,11 @@ class PlayerConsole(PlayerBase):
 
 
     def draw_board(self, board: list, state: GameState) -> None:
-        # YOUR CODE HERE
-        # TODO: draw grid with tokens using self._output
-        pass
+        # # YOUR CODE HERE
+        # # TODO: draw grid with tokens using self._output
+        for y, val_y in enumerate(board):
+            for x, val_yx in enumerate(val_y):
+                self._output.draw_token(y, x, val_yx)
 
 
 if __name__ == '__main__':
