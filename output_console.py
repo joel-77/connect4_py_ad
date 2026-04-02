@@ -12,24 +12,25 @@ class OutputConsole(OutputBase):
         Ansi.reset()
 
     def draw_grid(self) -> None:
-
-        top = "┌────┬"+"────┬"*5+"────┐"
-        row = "│    │"+5*"    │"+"    │"
-        mid = "├────┼"+"────┼"*5+"────┤"
-        bottom = "└────┴"+"────┴"*5+"────┘"
+        width = 5
+        top = "┌────┬"+"────┬"*width+"────┐"
+        row = "│    │"+width*"    │"+"    │"
+        mid = "├────┼"+"────┼"*width+"────┤"
+        bottom = "└────┴"+"────┴"*width+"────┘"
         for r in range(12):
             if r == 0:
-                Ansi.gotoXY(1,r+self.VERTICAL_OFFSET)
+                Ansi.gotoXY(1+self.STATUS_LINE_OFFSET,r+self.VERTICAL_OFFSET)
                 print(top)
-                Ansi.gotoXY(1,r+self.VERTICAL_OFFSET+1)
+                Ansi.gotoXY(1+self.STATUS_LINE_OFFSET,r+self.VERTICAL_OFFSET+1)
                 print(row)
             elif r%2 == 0:
-                Ansi.gotoXY(1,r+self.VERTICAL_OFFSET)
+                Ansi.gotoXY(1+self.STATUS_LINE_OFFSET,r+self.VERTICAL_OFFSET)
                 print (mid)
-                Ansi.gotoXY(1,r+self.VERTICAL_OFFSET+1)
+                Ansi.gotoXY(1+self.STATUS_LINE_OFFSET,r+self.VERTICAL_OFFSET+1)
                 print(row)
-        print(bottom)
+        print(" "*(self.STATUS_LINE_OFFSET-1),bottom)
         Ansi.reset()
+        Ansi.gotoXY(1,self.STATUS_LINE_OFFSET )
         """
         ┌
         ┐
@@ -49,7 +50,7 @@ class OutputConsole(OutputBase):
 
     def draw_token(self, x: int = 2, y: int = 2, token: GameToken = GameToken.EMPTY) -> None:
     # Korrekte Umrechnung der Feldkoordinaten in Konsolen-Koordinaten
-        px = 3 + x * 5
+        px = self.STATUS_LINE_OFFSET+3 + x * 5
         py = self.VERTICAL_OFFSET + 1 + y * 2
 
         Ansi.gotoXY(px, py)
@@ -63,7 +64,7 @@ class OutputConsole(OutputBase):
         else:
             print("  ")       # Feld löschen
         Ansi.reset()
-
+        Ansi.gotoXY(1,self.STATUS_LINE_OFFSET )
 if __name__ == '__main__':
     # use the code below to test your implementation
 
@@ -91,8 +92,7 @@ if __name__ == '__main__':
 
         key = input.read_key()
 
-        Ansi.gotoXY(1,17); Ansi.clear_line()
-        print(f"Key: {key}, Type: {type(key)}")
+        
     
         oc.draw_token(col, row, GameToken.EMPTY)  # clear old token
 
