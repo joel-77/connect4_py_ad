@@ -31,21 +31,31 @@ class PlayerConsole(PlayerBase):
 
             if key == Keys.RIGHT:
                 if x < 6:
+                    self._output.draw_token(x, y)
                     x += 1
             elif key == Keys.LEFT:
                 if x > 0:
+                    self._output.draw_token(x, y)
                     x -= 1
             elif key == Keys.ENTER:
+                self._output.draw_token(x, y)
                 return x
-            else: break
+            else: 
+                print("wrong key")
+                break
+
 
 
     def draw_board(self, board: list, state: GameState) -> None:
         # # YOUR CODE HERE
         # # TODO: draw grid with tokens using self._output
+        self._output.draw_grid()
         for y, val_y in enumerate(board):
             for x, val_yx in enumerate(val_y):
-                self._output.draw_token(y, x, val_yx)
+                self._output.draw_token(x, y, val_yx)
+        
+        # TODO fix BUG!!!
+        # TODO game state printen und 
 
 
 if __name__ == '__main__':
