@@ -87,4 +87,4 @@ if __name__ == '__main__':
     # player so they can see what has changed (using console input/ output)
     # also tell the *yellow* player that it's now reds's turn
     p.draw_board(board, GameState.TURN_RED)
-    # ...
+    # ...you
