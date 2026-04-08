@@ -11,7 +11,8 @@ class GameLogicLocal(GameLogicBase):
     def __init__(self):
 
         # YOUR CODE HERE
-        pass
+        _board = [[None for _ in range(cols)] for _ in range(rows)]
+        _state = GameState.TURN_RED
 
 
     def get_state(self) -> GameState:
