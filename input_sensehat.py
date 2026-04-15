@@ -63,13 +63,12 @@ class InputConsole(InputBase):
  
 
 if __name__ == '__main__':
-    # print("Use this class to read the cursor keys, ENTER and ESC. Let's try it out:")
-    # print("Press any key, ESC to exit.")
-    # c = InputConsole()
-    # while True:
-    #     key = c.read_key()
-    #     print(f"Taste: {key}, Type: {type(key)}")
-    #     if key == Keys.ENTER:
-    #         print("You pressed Enter!")
-    #     if (key == Keys.ESC):  # Abort with ESC
-    #         break
+    print("Use this class to read the joystick input. Let's try it out:")
+    print("Press any direction, ENTER (middle) to exit.")
+    c = InputConsole()
+    while True:
+        key = c.read_key()
+        print(f"Taste: {key}, Type: {type(key)}")
+        if key == Keys.ENTER:
+            print("You pressed Enter!")
+            break
