@@ -2,15 +2,15 @@ from input_base import InputBase
 from input_base import Keys
 from enum import Enum
 
-from time import sleep
+import time
 
 from sense_hat import SenseHat
 
-
+sense = SenseHat()
 
 class InputConsole(InputBase):
     """
-    Input handler for console applications using keyboard input.
+    Input handler for Sensehat applications using Joystick input.
 
     Do not modify this class. 
     """
@@ -37,66 +37,39 @@ class InputConsole(InputBase):
         Returns:
             The key code corresponding to the pressed key.
         """
-        if os.name == 'nt':  # Windows
-            key = msvcrt.getch()
-            if key in (b'\xe0', b'\x00'):  # Special keys (arrow keys send two bytes)
-                key = msvcrt.getch()  # Get the second byte for direction
-                if key == b"H":
-                    return Keys.UP
-                elif key == b"H":
-                    return Keys.UP
-                elif key == b"P":
-                    return Keys.DOWN
-                elif key == b"K":
-                    return Keys.LEFT
-                elif key == b"M":
-                    return Keys.RIGHT
-            elif key == b"\r":
-                return Keys.ENTER
-            elif key == b"\x1b":
-                return Keys.ESC
-            elif key == b"\03":  # Ctrl+C
-                raise KeyboardInterrupt()  # Trigger a KeyboardInterrupt
-            return Keys.UNKNOWN
+        key = None
+        while not key:
+            events = sense.stick.get_events()
+            for event in events:
+                if event.action == "released": continue # ignore release events
+                # print(f"Event {event.direction} {event.action}, at {event.timestamp}")
+                key = event.direction
+                break
+            if not key: time.sleep(0.1)
 
-        else:
-            fd = sys.stdin.fileno()
-            old_settings = termios.tcgetattr(fd)
-            try:
-                tty.setraw(sys.stdin.fileno())
-                ch = sys.stdin.read(1)
-                if ch == "\x1b":
-                    ch = sys.stdin.read(1)
-                    if ch == "\x1b":
-                        return Keys.ESC
-                    ch += sys.stdin.read(1)
-                    if ch == "[A":
-                        return Keys.UP
-                    elif ch == "[B":
-                        return Keys.DOWN
-                    elif ch == "[C":
-                        return Keys.RIGHT
-                    elif ch == "[D":
-                        return Keys.LEFT
-                elif ch == "\r":
-                    return Keys.ENTER
-                elif ch == "\n":
-                    return Keys.ENTER
-                elif ch == "\x03":
-                    raise KeyboardInterrupt()
-                return Keys.UNKNOWN
-            finally:
-                termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        if key == "up":
+            return Keys.UP
+        elif key == "down":
+            return Keys.DOWN
+        elif key == "left":
+            return Keys.LEFT
+        elif key == "right":
+            return Keys.RIGHT
+        elif key == "middle":
+            return Keys.ENTER
+        # No ESC!
+        return Keys.UNKNOWN
 
+ 
 
 if __name__ == '__main__':
-    print("Use this class to read the cursor keys, ENTER and ESC. Let's try it out:")
-    print("Press any key, ESC to exit.")
-    c = InputConsole()
-    while True:
-        key = c.read_key()
-        print(f"Taste: {key}, Type: {type(key)}")
-        if key == Keys.ENTER:
-            print("You pressed Enter!")
-        if (key == Keys.ESC):  # Abort with ESC
-            break
+    # print("Use this class to read the cursor keys, ENTER and ESC. Let's try it out:")
+    # print("Press any key, ESC to exit.")
+    # c = InputConsole()
+    # while True:
+    #     key = c.read_key()
+    #     print(f"Taste: {key}, Type: {type(key)}")
+    #     if key == Keys.ENTER:
+    #         print("You pressed Enter!")
+    #     if (key == Keys.ESC):  # Abort with ESC
+    #         break
