@@ -1,4 +1,3 @@
-
 from game_token import GameToken
 from game_state import GameState
 from drop_state import DropState
@@ -67,7 +66,7 @@ if __name__ == '__main__':
 
     from game_logic_local import GameLogicLocal
 
-    print(f"Util is Rapsberry Pi: {Util.isRaspberry()}")
+    # print(f"Util is Rapsberry Pi: {Util.isRaspberry()}")
 
     if Util.isRaspberry():
         from player_sensehat import PlayerSenseHat
