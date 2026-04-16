@@ -13,7 +13,7 @@ class Coordinator:
     PlayerConsole and a GameLogicLocal object.
     """
 
-    def __init__(self, game_logic: GameLogicBase, player_red: PlayerBase, player_yellow : PlayerBase):
+    def __init__(self, game_logic: GameLogicBase, player_red: PlayerBase, player_yellow: PlayerBase):
         """
         Create a Coordinator that mediates between the game_logic and the
         players player_red and player_yellow, which are passed as arguments. 
@@ -65,6 +65,8 @@ if __name__ == '__main__':
     print("Welcome to Connect 4")
 
     from game_logic_local import GameLogicLocal
+
+    print(f"Util is Rapsberry Pi: {Util.isRaspberry()}")
 
     if Util.isRaspberry():
         from player_sensehat import PlayerSenseHat
