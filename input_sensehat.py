@@ -8,7 +8,7 @@ from sense_hat import SenseHat
 
 sense = SenseHat()
 
-class InputConsole(InputBase):
+class InputSenseHat(InputBase):
     """
     Input handler for Sensehat applications using Joystick input.
 
@@ -65,7 +65,7 @@ class InputConsole(InputBase):
 if __name__ == '__main__':
     print("Use this class to read the joystick input. Let's try it out:")
     print("Press any direction, ENTER (middle) to exit.")
-    c = InputConsole()
+    c = InputSenseHat()
     while True:
         key = c.read_key()
         print(f"Taste: {key}, Type: {type(key)}")
