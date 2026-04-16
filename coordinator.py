@@ -65,12 +65,22 @@ if __name__ == '__main__':
     print("Welcome to Connect 4")
 
     from game_logic_local import GameLogicLocal
-    from player_console import PlayerConsole
+
+    if Util.isRaspberry():
+        from player_sensehat import PlayerSenseHat
+    else:
+        from player_console import PlayerConsole
 
     # create the appropriate player and game logic objects
     game_logic = GameLogicLocal()
-    player_red = PlayerConsole(GameToken.RED)
-    player_yellow = PlayerConsole(GameToken.YELLOW)
+
+    if Util.isRaspberry():
+        player_red = PlayerSenseHat(GameToken.RED)
+        player_yellow = PlayerSenseHat(GameToken.YELLOW)
+    else:
+        player_red = PlayerConsole(GameToken.RED)
+        player_yellow = PlayerConsole(GameToken.YELLOW)
+ 
 
     coordinator = Coordinator(game_logic, player_red, player_yellow)
     coordinator.run() # start game
